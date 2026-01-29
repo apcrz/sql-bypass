@@ -1,0 +1,12 @@
+/* src/app/globals.css */
+
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+@layer base {
+  body {
+    @apply bg-base-100 text-base-content;
+  }
+}
