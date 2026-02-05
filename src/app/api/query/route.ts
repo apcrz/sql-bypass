@@ -12,10 +12,10 @@ export async function POST(request: Request) {
          host: config.host,
          user: config.user,
          password: config.password,
-         database: config.database, // Importante: conectar no banco certo
+         database: config.database,
          port: Number(config.port),
          rowsAsArray: false,
-         supportBigNumbers: true, // Evita perda de precisão
+         supportBigNumbers: true,
          decimalNumbers: true,
       });
 

@@ -1,12 +1,11 @@
-// src/components/ConfigModal.tsx
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { DbConfig, useConnections } from '@/context/ConnectionsContext';
 import { useDbTest } from '@/hooks/useDbTest';
 import { v4 as uuid } from 'uuid';
 
 type ConfigModalProps = {
-   connection?: DbConfig; // se presente, modo edição
+   connection?: DbConfig;
    onClose?: () => void;
 };
 

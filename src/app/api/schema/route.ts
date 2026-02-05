@@ -1,5 +1,3 @@
-// @/app/api/schema/route.ts
-
 import { NextResponse } from 'next/server';
 import mysql from 'mysql2/promise';
 
@@ -33,7 +31,6 @@ export async function POST(request: Request) {
          name: db,
          tables: tree[db]
       }));
-      console.log("🚀 ~ POST ~ schema:", schema);
 
       await connection.end();
       return NextResponse.json({ data: schema });

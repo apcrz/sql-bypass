@@ -1,5 +1,3 @@
-// @/hooks/useDbTest.ts
-
 import { useState } from 'react';
 
 export function useDbTest() {

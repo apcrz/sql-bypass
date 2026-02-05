@@ -1,5 +1,3 @@
-// @/context/ConnectionsContext.tsx
-
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
@@ -38,7 +36,6 @@ export const ConnectionsProvider = ({ children }: { children: ReactNode }) => {
    const [connections, setConnections] = useState<DbConfig[]>([]);
    const [activeConnectionId, setActiveConnectionId] = useState<string | null>(null);
 
-   // Load inicial
    useEffect(() => {
       const savedConns = localStorage.getItem('db_connections');
       const savedActive = localStorage.getItem('db_active_id');

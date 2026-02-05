@@ -1,16 +1,18 @@
-// src/components/Topbar.tsx
-
 'use client';
+
 import { useTheme } from '@/context/ThemeContext';
 import { useConnections } from '@/context/ConnectionsContext';
 import ConfigModal from './ConfigModal';
 import { daisyThemes } from '@/lib/daisyThemes';
+import { useUIStore } from '@/store/useUIStore';
 
 const themes = daisyThemes;
 
 export default function Topbar({ toggleSidebar }: { toggleSidebar: () => void }) {
    const { theme: currentTheme, setTheme } = useTheme();
    const { activeConnection } = useConnections();
+
+   const { scale, increaseScale, decreaseScale, resetScale } = useUIStore();
 
    return (
       <div className="navbar bg-base-200 border-b border-base-300 px-4 shadow-md h-16 min-h-16">
@@ -25,9 +27,60 @@ export default function Topbar({ toggleSidebar }: { toggleSidebar: () => void })
             </a>
          </div>
 
-         <div className="flex-none gap-3 items-center">
+         <div className="flex-none flex items-center gap-3">
+
+            {/* Véio Cego (Zoom) */}
+            <div className="join border border-base-content/10 hidden md:flex mx-2">
+               <button
+                  className="join-item btn btn-sm btn-ghost font-mono px-2 text-lg"
+                  onClick={decreaseScale}
+                  title="Diminuir"
+               >
+                  -
+               </button>
+               <button
+                  className="join-item btn btn-sm btn-ghost font-mono w-14 cursor-default hover:bg-transparent"
+                  onClick={resetScale}
+                  title="Resetar (100%)"
+               >
+                  {scale}%
+               </button>
+               <button
+                  className="join-item btn btn-sm btn-ghost font-mono px-2 text-lg"
+                  onClick={increaseScale}
+                  title="Aumentar"
+               >
+                  +
+               </button>
+            </div>
+
+            <div className="dropdown dropdown-end">
+               <div tabIndex={0} role="button" className="btn btn-ghost btn-sm m-1 capitalize text-xs">
+                  🎨 {currentTheme}
+               </div>
+               <ul
+                  tabIndex={0}
+                  className="dropdown-content z-50 menu p-2 shadow-lg bg-base-300 rounded-box w-52 max-h-96 overflow-y-auto border border-base-100"
+               >
+                  {themes.map((t) => (
+                     <li key={t}>
+                        <button
+                           onClick={() => setTheme(t)}
+                           className={`btn btn-sm btn-ghost justify-start font-normal ${currentTheme === t ? 'btn-active' : ''
+                              }`}
+                        >
+                           {t}
+                        </button>
+                     </li>
+                  ))}
+               </ul>
+            </div>
+
             {activeConnection ? (
-               <div className="tooltip tooltip-bottom" data-tip={`Conectado a: ${activeConnection.host}`}>
+               <div
+                  className="tooltip tooltip-bottom"
+                  data-tip={`Conectado a: ${activeConnection.host || 'DB'}`}
+               >
                   <div className="badge badge-success badge-outline gap-2 p-3 font-mono text-[10px] cursor-help">
                      <div className="w-2 h-2 rounded-full bg-success animate-pulse shadow-[0_0_8px_rgba(0,255,0,0.5)]"></div>
                      ONLINE
@@ -42,26 +95,9 @@ export default function Topbar({ toggleSidebar }: { toggleSidebar: () => void })
                </div>
             )}
 
-            <div className="dropdown dropdown-end">
-               <div tabIndex={0} role="button" className="btn btn-ghost btn-sm m-1 capitalize text-xs">
-                  🎨 {currentTheme}
-               </div>
-               <ul tabIndex={0} className="dropdown-content z-50 menu p-2 shadow-lg bg-base-300 rounded-box w-52 max-h-96 overflow-y-auto border border-base-100">
-                  {themes.map((t) => (
-                     <li key={t}>
-                        <button
-                           onClick={() => setTheme(t)}
-                           className={`btn btn-sm btn-ghost justify-start content-center font-normal ${currentTheme === t ? "btn-active" : ""}`}
-                        >
-                           {t}
-                        </button>
-                     </li>
-                  ))}
-               </ul>
-            </div>
-
             <ConfigModal />
          </div>
+
       </div>
    );
 }
