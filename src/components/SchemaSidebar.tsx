@@ -82,20 +82,6 @@ export default function SchemaSidebar({ open, onSelectTable }: Props) {
                      {loading && <span className="loading loading-spinner loading-xs text-primary"></span>}
                   </div>
 
-                  {activeConnection && (
-                     <div className="relative">
-                        <input
-                           type="text"
-                           placeholder="Filtrar tabelas..."
-                           className="input input-xs input-bordered w-full pr-8 font-sans"
-                           value={searchTerm}
-                           onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        {searchTerm && (
-                           <button onClick={() => setSearchTerm('')} className="absolute right-2 top-1 text-[10px] opacity-40 hover:opacity-100">❌</button>
-                        )}
-                     </div>
-                  )}
                </div>
 
                <div className="flex-1 overflow-y-auto p-2 space-y-2 scrollbar-thin">
